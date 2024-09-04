@@ -12,14 +12,14 @@ local srm = _G.srm or {}
 local has_superwow = SetAutoloot and true or false
 
 local markIndex = {
-    ["star"] = 1,
-    ["circle"] = 2,
-    ["diamond"] = 3,
-    ["triangle"] = 4,
-    ["moon"] = 5,
-    ["square"] = 6,
-    ["cross"] = 7,
-    ["skull"] = 8,
+    ["skull"]   = 1,
+    ["cross"]   = 2,
+    ["circle"]  = 3,
+    ["diamond"] = 4,
+    ["triangle"] = 5,
+    ["square"]  = 6,
+    ["moon"]    = 7,
+    ["star"]    = 8,
 }
 
 do
@@ -277,20 +277,21 @@ do
         end
     end
 
-    local raidIconUVsToMarkName = function(aU, aV)
-        local key = tostring(aU) .. "," .. tostring(aV)
-        local UV_TO_RAID_ICONS = {
-            ["0.75,0.25"] = "skull", 
-            ["0.5,0.25"] = "cross", 
-            ["0,0.25"] = "moon", 
-            ["0,0"] = "star", 
-            ["0.75,0"] = "triangle", 
-            ["0.25,0"] = "circle", 
-            ["0.25,0.25"] = "square", 
-            ["0.5,0"] = "diamond", 
-        }
-        return UV_TO_RAID_ICONS[key]
-    end
+		local raidIconUVsToMarkName = function(aU, aV)
+			local key = tostring(aU) .. "," .. tostring(aV)
+			local UV_TO_RAID_ICONS = {
+				["0.75,0.25"] = "skull",
+				["0.50,0.25"] = "cross",
+				["0.25,0.00"] = "circle",
+				["0.50,0.00"] = "diamond",
+				["0.75,0.00"] = "triangle",
+				["0.25,0.25"] = "square",
+				["0.00,0.25"] = "moon",
+				["0.00,0.00"] = "star",
+			}
+			return UV_TO_RAID_ICONS[key]
+		end
+
 
     srm.tryTargetRaidMarkInNamePlates = function(aRaidMark)
         return visitNamePlates(function(plate)
@@ -446,16 +447,17 @@ do
                 castHighlightTexture:SetHeight(SIZE)
             end
 
-            local markNameToTextCoords = {
-                ["star"]     = {0.00,0.25,0.00,0.25},
-                ["circle"]   = {0.25,0.50,0.00,0.25},
-                ["diamond"]  = {0.50,0.75,0.00,0.25},
-                ["triangle"] = {0.75,1.00,0.00,0.25},
-                ["moon"]     = {0.00,0.25,0.25,0.50},
-                ["square"]   = {0.25,0.50,0.25,0.50},
-                ["cross"]    = {0.50,0.75,0.25,0.50},
-                ["skull"]    = {0.75,1.00,0.25,0.50},
-            }
+			local markNameToTextCoords = {
+				["skull"]    = {0.75, 1.00, 0.25, 0.50},
+				["cross"]    = {0.50, 0.75, 0.25, 0.50},
+				["circle"]   = {0.25, 0.50, 0.00, 0.25},
+				["diamond"]  = {0.50, 0.75, 0.00, 0.25},
+				["triangle"] = {0.75, 1.00, 0.00, 0.25},
+				["square"]   = {0.25, 0.50, 0.25, 0.50},
+				["moon"]     = {0.00, 0.25, 0.25, 0.50},
+				["star"]     = {0.00, 0.25, 0.00, 0.25},
+			}
+
             raidMarkTexture:SetTexCoord(unpack(markNameToTextCoords[aMark]))
 
             raidMark.setScale = function(aScale)
@@ -485,15 +487,16 @@ do
             return raidMark
         end
 
-        local trayButtons = {}
-        table.insert(trayButtons, makeRaidMarkFrame(0,0, "star"))
-        table.insert(trayButtons, makeRaidMarkFrame(1,0, "circle"))
-        table.insert(trayButtons, makeRaidMarkFrame(2,0, "diamond"))
-        table.insert(trayButtons, makeRaidMarkFrame(3,0, "triangle"))
-        table.insert(trayButtons, makeRaidMarkFrame(4,0, "moon"))
-        table.insert(trayButtons, makeRaidMarkFrame(5,0, "square"))
-        table.insert(trayButtons, makeRaidMarkFrame(6,0, "cross"))
-        table.insert(trayButtons, makeRaidMarkFrame(7,0, "skull"))
+		local trayButtons = {}
+		table.insert(trayButtons, makeRaidMarkFrame(0, 1, "skull"))
+		table.insert(trayButtons, makeRaidMarkFrame(1, 1, "cross"))
+		table.insert(trayButtons, makeRaidMarkFrame(2, 1, "circle"))
+		table.insert(trayButtons, makeRaidMarkFrame(3, 1, "diamond"))
+		table.insert(trayButtons, makeRaidMarkFrame(0, 0, "triangle"))
+		table.insert(trayButtons, makeRaidMarkFrame(1, 0, "square"))
+		table.insert(trayButtons, makeRaidMarkFrame(2, 0, "moon"))
+		table.insert(trayButtons, makeRaidMarkFrame(3, 0, "star"))
+
 
         if has_superwow then
             local elapsed = 0
@@ -765,4 +768,3 @@ do
         end)(unpack(arg))
     end)
 end
-
