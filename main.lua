@@ -12,14 +12,14 @@ local srm = _G.srm or {}
 local has_superwow = SetAutoloot and true or false
 
 local markIndex = {
-    ["skull"]   = 1,
-    ["cross"]   = 2,
-    ["circle"]  = 3,
-    ["diamond"] = 4,
-    ["triangle"] = 5,
+    ["skull"]   = 8,
+    ["cross"]   = 7,
+    ["circle"]  = 2,
+    ["diamond"] = 3,
+    ["triangle"] = 4,
     ["square"]  = 6,
-    ["moon"]    = 7,
-    ["star"]    = 8,
+    ["moon"]    = 5,
+    ["star"]    = 1,
 }
 
 do
@@ -55,14 +55,14 @@ end
 
 srm.unitHasRaidMark = function(aUnitID, aMark)
     local unitMark = ({
-        [1] = "star",
-        [2] = "circle",
-        [3] = "diamond",
-        [4] = "triangle",
-        [5] = "moon",
+        [1] = "skull",
+        [2] = "cross",
+        [3] = "circle",
+        [4] = "diamond",
+        [5] = "triangle",
         [6] = "square",
-        [7] = "cross",
-        [8] = "skull",
+        [7] = "moon",
+        [8] = "star",
     })[GetRaidTargetIndex(aUnitID)] or nil
 
     return aMark == unitMark
@@ -287,7 +287,7 @@ do
 				["0.75,0.00"] = "triangle",
 				["0.25,0.25"] = "square",
 				["0.00,0.25"] = "moon",
-				["0.00,0.00"] = "star",
+				["0.70,0.00"] = "star",
 			}
 			return UV_TO_RAID_ICONS[key]
 		end
@@ -768,3 +768,4 @@ do
         end)(unpack(arg))
     end)
 end
+
