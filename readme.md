@@ -1,3 +1,4 @@
+This fork has changed mark order for Doom Turtles, GUI has 2 rows instead of one.
 # Sorgis Raid Marks
 Raid mark targeting and assigning addon for the vanilla wow client  
 This version is further modified to make use of [SuperWoW](https://github.com/balakethelock/SuperWoW/)  
